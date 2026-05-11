@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class NoteController {
 
     @GetMapping("/hello")
-    public String hello() {
-        return "hello how are you !";
+    public Map<String, String> hello() {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "hello how are you !");
+        return response;
     }
 
 }
