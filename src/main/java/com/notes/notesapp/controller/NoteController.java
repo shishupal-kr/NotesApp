@@ -13,4 +13,12 @@ public class NoteController {
         return response;
     }
 
+    @PostMapping("/hello")
+    public Map<String, String> posthello() {
+        Map<String, String> response = new HashMap<>();
+
+        response.put("message", "This is Post Api");
+        return response;
+    }
+
 }
