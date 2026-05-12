@@ -16,6 +16,11 @@ public class NoteService {
 
     public Map<String, String> createNote(NoteDto noteDto) {
 
+        Note note = new Note();
+        note.setTitle(noteDto.getTitle());
+        note.setContent(noteDto.getContent());
+        Note savedNote = noteRepository.save(note);
+
         Map<String, String> response = new HashMap<>();
 
         response.put("title", noteDto.getTitle());
