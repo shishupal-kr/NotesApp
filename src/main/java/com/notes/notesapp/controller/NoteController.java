@@ -3,6 +3,7 @@ package com.notes.notesapp.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.notes.notesapp.service.NoteService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 public class NoteController {
+
+    private final NoteService noteService;  // using service layer
+    public NoteController(NoteService noteService) {
+        this.noteService = noteService;
+    }
 
     @GetMapping("/hello")
     public Map<String, String> gethello() {
@@ -29,14 +35,9 @@ public class NoteController {
     }
 
     @PostMapping("/notes")
-    public Map<String, String> createNote(@RequestBody NoteDto NoteDto) { // json to java object and store in NoteDto (deserialization)
-
-        Map<String, String> response = new HashMap<>();
-
-        response.put("title", NoteDto.getTitle());
-        response.put("content", NoteDto.getContent());
-
-        return response;
+    public Map<String, String> createNote(@RequestBody NoteDto noteDto) { // json to java object and store in NoteDto (deserialization)
+        //logic in service layer
+        return noteService.createNote(noteDto);
     }
 
 }
