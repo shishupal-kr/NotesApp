@@ -1,4 +1,6 @@
-package dto;
+package com.notes.notesapp.dto;
+
+//data transfer object (dto)
 
 public class NoteDto {
 
