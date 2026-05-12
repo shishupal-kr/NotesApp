@@ -1,6 +1,8 @@
 package com.notes.notesapp.service;
 
 import com.notes.notesapp.dto.NoteDto;
+import com.notes.notesapp.entity.Note;
+import com.notes.notesapp.repository.NoteRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -23,8 +25,9 @@ public class NoteService {
 
         Map<String, String> response = new HashMap<>();
 
-        response.put("title", noteDto.getTitle());
-        response.put("content", noteDto.getContent());
+        response.put("id", savedNote.getId().toString());
+        response.put("title", savedNote.getTitle());
+        response.put("content", savedNote.getContent());
 
         return response;
 
