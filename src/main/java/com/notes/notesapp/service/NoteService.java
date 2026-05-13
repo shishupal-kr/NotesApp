@@ -1,10 +1,12 @@
 package com.notes.notesapp.service;
 
 import com.notes.notesapp.dto.NoteRequestDto;
+import com.notes.notesapp.dto.NoteResponseDto;
 import com.notes.notesapp.entity.Note;
 import com.notes.notesapp.repository.NoteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,24 +19,38 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
-    public Map<String, String> createNote(NoteRequestDto noteDto) {
+    public NoteResponseDto createNote(NoteRequestDto noteRequestDto) {
 
         Note note = new Note();
-        note.setTitle(noteDto.getTitle());
-        note.setContent(noteDto.getContent());
+
+        note.setTitle(noteRequestDto.getTitle());
+        note.setContent(noteRequestDto.getContent());
+
         Note savedNote = noteRepository.save(note);
 
-        Map<String, String> response = new HashMap<>();
+        NoteResponseDto responseDto = new NoteResponseDto();
 
-        response.put("id", savedNote.getId().toString());
-        response.put("title", savedNote.getTitle());
-        response.put("content", savedNote.getContent());
+        responseDto.setId(savedNote.getId());
+        responseDto.setTitle(savedNote.getTitle());
+        responseDto.setContent(savedNote.getContent());
 
-        return response;
-
+        return responseDto;
     }
 
-    public List<Note> getAllNotes(){
-        return noteRepository.findAll();
+    public List<NoteResponseDto> getAllNotes(){
+
+        List<Note> notes = noteRepository.findAll();
+
+        List<NoteResponseDto> responseList = new ArrayList();
+        for (Note note: notes){
+            NoteResponseDto dto = new NoteResponseDto();
+
+            dto.setId(note.getId());
+            dto.setTitle(note.getTitle());
+            dto.setContent(note.getContent());
+
+            responseList.add(dto);
+        }
+        return responseList;
     }
 }
