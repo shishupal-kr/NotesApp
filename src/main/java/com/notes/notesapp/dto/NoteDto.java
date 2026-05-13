@@ -11,7 +11,7 @@ public class NoteDto {
     @Size(min = 3, max = 50, message = "Title must be btwn 3-50 characters" )
     public String title;
 
-    @NotBlank
+    @NotBlank(message = "Content cannot be empty")
     @Size(min = 1, message = "Must be 1 character")
     public String content;
 
