@@ -1,5 +1,6 @@
 package com.notes.notesapp.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,7 @@ public class NoteController {
     }
 
     @PostMapping("/notes")
-    public Map<String, String> createNote(@RequestBody NoteDto noteDto) { // json to java object and store in NoteDto (deserialization)
+    public Map<String, String> createNote(@Valid @RequestBody NoteDto noteDto) { // json to java object and store in NoteDto (deserialization)
         //logic in service layer
         return noteService.createNote(noteDto);
     }
