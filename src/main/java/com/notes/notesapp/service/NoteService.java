@@ -1,6 +1,6 @@
 package com.notes.notesapp.service;
 
-import com.notes.notesapp.dto.NoteDto;
+import com.notes.notesapp.dto.NoteRequestDto;
 import com.notes.notesapp.entity.Note;
 import com.notes.notesapp.repository.NoteRepository;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
-    public Map<String, String> createNote(NoteDto noteDto) {
+    public Map<String, String> createNote(NoteRequestDto noteDto) {
 
         Note note = new Note();
         note.setTitle(noteDto.getTitle());

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.notes.notesapp.dto.NoteDto;
+import com.notes.notesapp.dto.NoteRequestDto;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -38,7 +38,7 @@ public class NoteController {
     }
 
     @PostMapping("/notes")
-    public Map<String, String> createNote(@Valid @RequestBody NoteDto noteDto) { // json to java object and store in NoteDto (deserialization)
+    public Map<String, String> createNote(@Valid @RequestBody NoteRequestDto noteDto) { // json to java object and store in NoteDto (deserialization)
         //logic in service layer
         return noteService.createNote(noteDto);
     }
