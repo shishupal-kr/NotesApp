@@ -1,5 +1,6 @@
 package com.notes.notesapp.controller;
 
+import com.notes.notesapp.entity.Note;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.notes.notesapp.service.NoteService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.notes.notesapp.dto.NoteDto;
@@ -39,6 +41,11 @@ public class NoteController {
     public Map<String, String> createNote(@Valid @RequestBody NoteDto noteDto) { // json to java object and store in NoteDto (deserialization)
         //logic in service layer
         return noteService.createNote(noteDto);
+    }
+
+    @GetMapping("/notes")
+    public List<Note> getAllNotes(){
+        return noteService.getAllNotes();
     }
 
 }
