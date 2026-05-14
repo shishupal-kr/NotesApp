@@ -23,21 +23,6 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-    @GetMapping("/hello")
-    public Map<String, String> gethello() {
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "hello how are you !");
-        return response;
-    }
-
-    @PostMapping("/hello")
-    public Map<String, String> posthello() {
-        Map<String, String> response = new HashMap<>();
-
-        response.put("message", "This is Post Api");
-        return response;
-    }
-
     @PostMapping("/notes")
     public NoteResponseDto createNote(
             @Valid @RequestBody NoteRequestDto noteDto // json to java object and store in NoteDto (deserialization)
