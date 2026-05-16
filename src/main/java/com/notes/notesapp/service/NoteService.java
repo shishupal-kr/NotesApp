@@ -3,6 +3,7 @@ package com.notes.notesapp.service;
 import com.notes.notesapp.dto.NoteRequestDto;
 import com.notes.notesapp.dto.NoteResponseDto;
 import com.notes.notesapp.entity.Note;
+import com.notes.notesapp.exception.ResourceNotFoundException;
 import com.notes.notesapp.repository.NoteRepository;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +74,7 @@ public class NoteService {
         Optional<Note> optionalNote = noteRepository.findById(id);
 
         if (optionalNote.isEmpty()) {
-            throw new RuntimeException("Note not found");
+            throw new ResourceNotFoundException("Note not found");
         }
 
         Note note = optionalNote.get();
@@ -102,7 +103,7 @@ public class NoteService {
         Optional<Note> optionalNote = noteRepository.findById(id);
 
         if (optionalNote.isEmpty()) {
-            throw new RuntimeException("Note not found !!");
+            throw new ResourceNotFoundException("Note not found");
         }
         noteRepository.deleteById(id);
 
