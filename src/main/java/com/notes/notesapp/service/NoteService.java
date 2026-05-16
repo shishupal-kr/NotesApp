@@ -6,6 +6,7 @@ import com.notes.notesapp.entity.Note;
 import com.notes.notesapp.repository.NoteRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,9 @@ public class NoteService {
         note.setTitle(noteRequestDto.getTitle());
         note.setContent(noteRequestDto.getContent());
 
+        note.setCreatedAt(LocalDateTime.now());
+        note.setUpdatedAt(LocalDateTime.now());
+
         Note savedNote = noteRepository.save(note);
 
         NoteResponseDto responseDto = new NoteResponseDto();
@@ -33,6 +37,9 @@ public class NoteService {
         responseDto.setId(savedNote.getId());
         responseDto.setTitle(savedNote.getTitle());
         responseDto.setContent(savedNote.getContent());
+
+        responseDto.setCreatedAt(savedNote.getCreatedAt());
+        responseDto.setUpdatedAt(savedNote.getUpdatedAt());
 
         return responseDto;
     }
@@ -48,6 +55,9 @@ public class NoteService {
             dto.setId(note.getId());
             dto.setTitle(note.getTitle());
             dto.setContent(note.getContent());
+
+            dto.setCreatedAt(note.getCreatedAt());
+            dto.setUpdatedAt(note.getUpdatedAt());
 
             responseList.add(dto);
         }
@@ -66,6 +76,8 @@ public class NoteService {
         note.setTitle(noteRequestDto.getTitle());
         note.setContent(noteRequestDto.getContent());
 
+        note.setUpdatedAt(LocalDateTime.now());
+
         Note updatedNote = noteRepository.save(note);
 
         NoteResponseDto responseDto = new NoteResponseDto();
@@ -73,6 +85,9 @@ public class NoteService {
         responseDto.setId(updatedNote.getId());
         responseDto.setTitle(updatedNote.getTitle());
         responseDto.setContent(updatedNote.getContent());
+
+        responseDto.setCreatedAt(updatedNote.getCreatedAt());
+        responseDto.setUpdatedAt(updatedNote.getUpdatedAt());
 
         return responseDto;
     }
