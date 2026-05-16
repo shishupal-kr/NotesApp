@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NoteService {
@@ -50,5 +51,28 @@ public class NoteService {
             responseList.add(dto);
         }
         return responseList;
+    }
+
+    public NoteResponseDto updateNote(Long id, NoteRequestDto noteRequestDto){
+
+        Optional<Note> optionalNote = noteRepository.findById(id);
+
+        if (optionalNote.isEmpty()) {
+            throw new RuntimeException("Note not found");
+        }
+
+        Note note = optionalNote.get();
+        note.setTitle(noteRequestDto.getTitle());
+        note.setContent(noteRequestDto.getContent());
+
+        Note updatedNote = noteRepository.save(note);
+
+        NoteResponseDto responseDto = new NoteResponseDto();
+
+        responseDto.setId(updatedNote.getId());
+        responseDto.setTitle(updatedNote.getTitle());
+        responseDto.setContent(updatedNote.getContent());
+
+        return responseDto ;
     }
 }
