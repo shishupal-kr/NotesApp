@@ -46,4 +46,11 @@ public class NoteController {
         return noteService.deleteNote(id);
     }
 
+    @GetMapping("/notes/search")
+    public List<NoteResponseDto> searchNotesByTitle(
+            @RequestParam String title
+    ) {
+
+        return noteService.searchNotesByTitle(title);
+    }
 }

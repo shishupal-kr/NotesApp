@@ -104,4 +104,29 @@ public class NoteService {
 
         return " Note deleted Successfully !";
     }
+
+
+
+    public List<NoteResponseDto> searchNotesByTitle(String title) {
+
+        List<Note> notes =
+                noteRepository.findByTitleContainingIgnoreCase(title);
+
+        List<NoteResponseDto> responseList = new ArrayList<>();
+
+        for (Note note : notes) {
+
+            NoteResponseDto dto = new NoteResponseDto();
+
+            dto.setId(note.getId());
+            dto.setTitle(note.getTitle());
+            dto.setContent(note.getContent());
+            dto.setCreatedAt(note.getCreatedAt());
+            dto.setUpdatedAt(note.getUpdatedAt());
+
+            responseList.add(dto);
+        }
+
+        return responseList;
+    }
 }
