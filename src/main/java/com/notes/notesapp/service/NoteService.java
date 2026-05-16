@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class NoteService {
@@ -53,13 +52,8 @@ public class NoteService {
     //Update Note Logic
     public NoteResponseDto updateNote(Long id, NoteRequestDto noteRequestDto) {
 
-        Optional<Note> optionalNote = noteRepository.findById(id);
+        Note note = findNoteById(id);
 
-        if (optionalNote.isEmpty()) {
-            throw new ResourceNotFoundException("Note not found");
-        }
-
-        Note note = optionalNote.get();
         note.setTitle(noteRequestDto.getTitle());
         note.setContent(noteRequestDto.getContent());
 
@@ -73,11 +67,8 @@ public class NoteService {
     //Delete Note Logic
     public String deleteNote(Long id) {
 
-        Optional<Note> optionalNote = noteRepository.findById(id);
+        findNoteById(id);
 
-        if (optionalNote.isEmpty()) {
-            throw new ResourceNotFoundException("Note not found");
-        }
         noteRepository.deleteById(id);
 
         return " Note deleted Successfully !";
@@ -97,7 +88,7 @@ public class NoteService {
         return responseList;
     }
 
-    //Reusable helper Logic for Logic
+    // Reusable Maps Entity to Response DTO
     private NoteResponseDto mapToResponseDto(Note note) {
 
         NoteResponseDto dto = new NoteResponseDto();
@@ -109,5 +100,13 @@ public class NoteService {
         dto.setUpdatedAt(note.getUpdatedAt());
 
         return dto;
+    }
+
+    // Reusable Finds Note by ID or throws exception
+    private Note findNoteById(Long id) {
+
+        return noteRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Note not found"));
     }
 }
