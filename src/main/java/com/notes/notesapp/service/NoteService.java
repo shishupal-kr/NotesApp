@@ -20,6 +20,7 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
+    //Create Note Logic
     public NoteResponseDto createNote(NoteRequestDto noteRequestDto) {
 
         Note note = new Note();
@@ -44,11 +45,13 @@ public class NoteService {
         return responseDto;
     }
 
+    //View Note Logic
     public List<NoteResponseDto> getAllNotes() {
 
         List<Note> notes = noteRepository.findAll();
 
         List<NoteResponseDto> responseList = new ArrayList();
+
         for (Note note : notes) {
             NoteResponseDto dto = new NoteResponseDto();
 
@@ -64,6 +67,7 @@ public class NoteService {
         return responseList;
     }
 
+    //Update Note Logic
     public NoteResponseDto updateNote(Long id, NoteRequestDto noteRequestDto) {
 
         Optional<Note> optionalNote = noteRepository.findById(id);
@@ -92,6 +96,7 @@ public class NoteService {
         return responseDto;
     }
 
+    //Delete Note Logic
     public String deleteNote(Long id) {
 
         Optional<Note> optionalNote = noteRepository.findById(id);
@@ -99,18 +104,15 @@ public class NoteService {
         if (optionalNote.isEmpty()) {
             throw new RuntimeException("Note not found !!");
         }
-
         noteRepository.deleteById(id);
 
         return " Note deleted Successfully !";
     }
 
-
-
+    //Search Note by Title Logic
     public List<NoteResponseDto> searchNotesByTitle(String title) {
 
-        List<Note> notes =
-                noteRepository.findByTitleContainingIgnoreCase(title);
+        List<Note> notes = noteRepository.findByTitleContainingIgnoreCase(title);
 
         List<NoteResponseDto> responseList = new ArrayList<>();
 
@@ -126,7 +128,6 @@ public class NoteService {
 
             responseList.add(dto);
         }
-
         return responseList;
     }
 }

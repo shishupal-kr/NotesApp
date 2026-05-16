@@ -1,7 +1,6 @@
 package com.notes.notesapp.controller;
 
 import com.notes.notesapp.dto.NoteResponseDto;
-import com.notes.notesapp.repository.NoteRepository;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import com.notes.notesapp.service.NoteService;
@@ -19,11 +18,12 @@ public class NoteController {
         this.noteService = noteService;
     }
 
+    //HTTPS handler for user interaction
+
     @PostMapping("/notes")
     public NoteResponseDto createNote(
-            @Valid @RequestBody NoteRequestDto noteRequestDto // json to java object and store in NoteDto (deserialization)
+            @Valid @RequestBody NoteRequestDto noteRequestDto
     ) {
-        //logic in service layer
         return noteService.createNote(noteRequestDto);
     }
 
@@ -50,7 +50,6 @@ public class NoteController {
     public List<NoteResponseDto> searchNotesByTitle(
             @RequestParam String title
     ) {
-
         return noteService.searchNotesByTitle(title);
     }
 }
