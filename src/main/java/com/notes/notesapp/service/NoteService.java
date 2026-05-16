@@ -14,6 +14,7 @@ import java.util.Optional;
 public class NoteService {
 
     private final NoteRepository noteRepository;
+
     public NoteService(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
     }
@@ -36,12 +37,12 @@ public class NoteService {
         return responseDto;
     }
 
-    public List<NoteResponseDto> getAllNotes(){
+    public List<NoteResponseDto> getAllNotes() {
 
         List<Note> notes = noteRepository.findAll();
 
         List<NoteResponseDto> responseList = new ArrayList();
-        for (Note note: notes){
+        for (Note note : notes) {
             NoteResponseDto dto = new NoteResponseDto();
 
             dto.setId(note.getId());
@@ -53,7 +54,7 @@ public class NoteService {
         return responseList;
     }
 
-    public NoteResponseDto updateNote(Long id, NoteRequestDto noteRequestDto){
+    public NoteResponseDto updateNote(Long id, NoteRequestDto noteRequestDto) {
 
         Optional<Note> optionalNote = noteRepository.findById(id);
 
@@ -73,6 +74,19 @@ public class NoteService {
         responseDto.setTitle(updatedNote.getTitle());
         responseDto.setContent(updatedNote.getContent());
 
-        return responseDto ;
+        return responseDto;
+    }
+
+    public String deleteNote(Long id) {
+
+        Optional<Note> optionalNote = noteRepository.findById(id);
+
+        if (optionalNote.isEmpty()) {
+            throw new RuntimeException("Note not found !!");
+        }
+
+        noteRepository.deleteById(id);
+
+        return " Note deleted Successfully !";
     }
 }

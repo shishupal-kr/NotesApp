@@ -1,6 +1,7 @@
 package com.notes.notesapp.controller;
 
 import com.notes.notesapp.dto.NoteResponseDto;
+import com.notes.notesapp.repository.NoteRepository;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import com.notes.notesapp.service.NoteService;
@@ -37,6 +38,12 @@ public class NoteController {
                 @Valid @RequestBody NoteRequestDto noteRequestDto
     ){
         return noteService.updateNote(id, noteRequestDto);
+    }
+
+    @DeleteMapping("notes/{id}")
+    public String deleteNote(@PathVariable Long id){
+
+        return noteService.deleteNote(id);
     }
 
 }
