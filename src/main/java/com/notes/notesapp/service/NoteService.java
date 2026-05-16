@@ -34,16 +34,7 @@ public class NoteService {
 
         Note savedNote = noteRepository.save(note);
 
-        NoteResponseDto responseDto = new NoteResponseDto();
-
-        responseDto.setId(savedNote.getId());
-        responseDto.setTitle(savedNote.getTitle());
-        responseDto.setContent(savedNote.getContent());
-
-        responseDto.setCreatedAt(savedNote.getCreatedAt());
-        responseDto.setUpdatedAt(savedNote.getUpdatedAt());
-
-        return responseDto;
+        return mapToResponseDto(savedNote);
     }
 
     //View Note Logic
@@ -54,16 +45,7 @@ public class NoteService {
         List<NoteResponseDto> responseList = new ArrayList();
 
         for (Note note : notes) {
-            NoteResponseDto dto = new NoteResponseDto();
-
-            dto.setId(note.getId());
-            dto.setTitle(note.getTitle());
-            dto.setContent(note.getContent());
-
-            dto.setCreatedAt(note.getCreatedAt());
-            dto.setUpdatedAt(note.getUpdatedAt());
-
-            responseList.add(dto);
+            responseList.add(mapToResponseDto(note));
         }
         return responseList;
     }
@@ -85,16 +67,7 @@ public class NoteService {
 
         Note updatedNote = noteRepository.save(note);
 
-        NoteResponseDto responseDto = new NoteResponseDto();
-
-        responseDto.setId(updatedNote.getId());
-        responseDto.setTitle(updatedNote.getTitle());
-        responseDto.setContent(updatedNote.getContent());
-
-        responseDto.setCreatedAt(updatedNote.getCreatedAt());
-        responseDto.setUpdatedAt(updatedNote.getUpdatedAt());
-
-        return responseDto;
+        return mapToResponseDto(updatedNote);
     }
 
     //Delete Note Logic
@@ -119,16 +92,22 @@ public class NoteService {
 
         for (Note note : notes) {
 
-            NoteResponseDto dto = new NoteResponseDto();
-
-            dto.setId(note.getId());
-            dto.setTitle(note.getTitle());
-            dto.setContent(note.getContent());
-            dto.setCreatedAt(note.getCreatedAt());
-            dto.setUpdatedAt(note.getUpdatedAt());
-
-            responseList.add(dto);
+            responseList.add(mapToResponseDto(note));
         }
         return responseList;
+    }
+
+    //Reusable helper Logic for Logic
+    private NoteResponseDto mapToResponseDto(Note note) {
+
+        NoteResponseDto dto = new NoteResponseDto();
+
+        dto.setId(note.getId());
+        dto.setTitle(note.getTitle());
+        dto.setContent(note.getContent());
+        dto.setCreatedAt(note.getCreatedAt());
+        dto.setUpdatedAt(note.getUpdatedAt());
+
+        return dto;
     }
 }
