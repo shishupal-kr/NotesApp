@@ -2,6 +2,8 @@ package com.notes.notesapp.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -10,6 +12,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
+    @OneToMany(mappedBy = "user")
+    private List<Note> notes;
 
     public Long getId() {
         return id;
@@ -23,5 +27,12 @@ public class User {
     }
     public void setUsername(String name) {
         this.username = name;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
+    }
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
     }
 }

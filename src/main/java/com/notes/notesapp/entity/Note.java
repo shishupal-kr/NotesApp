@@ -1,10 +1,6 @@
 package com.notes.notesapp.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -17,6 +13,9 @@ public class Note {
     private Long id;
     private String title;
     private String content;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -52,4 +51,10 @@ public class Note {
         this.updatedAt = updatedAt;
     }
 
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
