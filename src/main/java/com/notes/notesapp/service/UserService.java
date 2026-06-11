@@ -3,6 +3,7 @@ package com.notes.notesapp.service;
 import com.notes.notesapp.dto.UserRequestDto;
 import com.notes.notesapp.dto.UserResponseDto;
 import com.notes.notesapp.entity.User;
+import com.notes.notesapp.exception.ResourceNotFoundException;
 import com.notes.notesapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +33,22 @@ public class UserService {
         responseDto.setUsername(savedUser.getUsername());
 
         return responseDto;
+    }
+
+    public UserResponseDto getUserById(Long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "User not found"
+                        ));
+
+        UserResponseDto dto =
+                new UserResponseDto();
+
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+
+        return dto;
     }
 }
