@@ -13,7 +13,7 @@ public class Note {
     private Long id;
     private String title;
     private String content;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
     private LocalDateTime createdAt;
