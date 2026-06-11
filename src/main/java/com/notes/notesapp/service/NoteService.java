@@ -3,8 +3,10 @@ package com.notes.notesapp.service;
 import com.notes.notesapp.dto.NoteRequestDto;
 import com.notes.notesapp.dto.NoteResponseDto;
 import com.notes.notesapp.entity.Note;
+import com.notes.notesapp.entity.User;
 import com.notes.notesapp.exception.ResourceNotFoundException;
 import com.notes.notesapp.repository.NoteRepository;
+import com.notes.notesapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,16 +17,21 @@ import java.util.List;
 public class NoteService {
 
     private final NoteRepository noteRepository;
+    private final UserRepository userRepository;
 
-    public NoteService(NoteRepository noteRepository) {
+    public NoteService(NoteRepository noteRepository, UserRepository userRepository) {
         this.noteRepository = noteRepository;
+        this.userRepository = userRepository;
     }
 
     //Create Note Logic
     public NoteResponseDto createNote(NoteRequestDto noteRequestDto) {
 
+        User user =  findUserById(noteRequestDto.getUserId());
+
         Note note = new Note();
 
+        note.setUser(user);
         note.setTitle(noteRequestDto.getTitle());
         note.setContent(noteRequestDto.getContent());
 
@@ -108,5 +115,14 @@ public class NoteService {
         return noteRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Note not found"));
+    }
+
+    private User findUserById(Long id) {
+
+        return userRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "User not found"
+                        ));
     }
 }
