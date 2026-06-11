@@ -8,6 +8,8 @@ import com.notes.notesapp.exception.ResourceNotFoundException;
 import com.notes.notesapp.repository.NoteRepository;
 import com.notes.notesapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -92,6 +94,23 @@ public class NoteService {
 
             responseList.add(mapToResponseDto(note));
         }
+        return responseList;
+    }
+
+    public List<NoteResponseDto> getNotesByUserId(Long userId) {
+
+        findUserById(userId);
+
+        List<Note> notes =
+                noteRepository.findByUserId(userId);
+
+        List<NoteResponseDto> responseList =
+                new ArrayList<>();
+
+        for (Note note : notes) {
+            responseList.add(mapToResponseDto(note));
+        }
+
         return responseList;
     }
 

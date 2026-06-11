@@ -52,4 +52,11 @@ public class NoteController {
     ) {
         return noteService.searchNotesByTitle(title);
     }
+
+    @GetMapping("/users/{userId}/notes")
+    public List<NoteResponseDto> getNotesByUserId(
+            @PathVariable Long userId
+    ) {
+        return noteService.getNotesByUserId(userId);
+    }
 }
